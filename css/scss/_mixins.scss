@@ -1,0 +1,87 @@
+/******************************************************  
+	
+	MIXINS
+
+******************************************************/
+
+
+
+// For colour palettes
+// Set up colour's in '_config.scss' using Sass Maps - see _config.scss for details
+
+@function palette($palette, $tone: 'base') {
+    @return map-get(map-get($palettes, $palette), $tone);
+}
+
+
+// cross-browser opacity
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+
+// center elements
+@mixin center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+
+// clearfix/group
+@mixin group() {
+    zoom: 1;
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+
+// truncate long lines of unbroken text e.g long URLs
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+// Breakpoints (adjust to design requirements)
+
+@mixin breakpoint($point) {
+  @if $point == palm {
+    @media (max-width: 480px) { @content; }
+  }
+  @if $point == lap {
+    @media (min-width: 481px) { @content; }
+  }
+  @else if $point == portable {
+    @media (min-width: 780px) { @content; }
+  }
+  @else if $point == desk {
+    @media (min-width: 1024px)  { @content; }
+  }
+   @else if $point == desk-plus {
+    @media (min-width: 1280px)  { @content; }
+  }
+  @if $point == max {
+    @media (min-width: 1800px) { @content; }
+  }
+  @if $point == ipad {
+    @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:landscape) { @content; }
+    @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) { @content; }
+  }
+  @if $point == ipad-portrait {
+    @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) { @content; }
+  }
+  @if $point == ipad-landscape {
+    @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:landscape) { @content; }
+  }
+}
